@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MNS Group - Portale Centrale</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: white;
+        }
+
+        .notifications {
+            position: relative;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .notifications:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4757;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .welcome-title {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+
+        .welcome-subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .system-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .system-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .system-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .system-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .system-icon {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .system-info h3 {
+            font-size: 1.3rem;
+            color: #2c3e50;
+            margin-bottom: 0.3rem;
+        }
+
+        .system-info p {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .system-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mini-stat {
+            text-align: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 10px;
+        }
+
+        .mini-stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .mini-stat-label {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+            margin-top: 0.3rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .quick-actions {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-actions h2 {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quick-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-action {
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .quick-action:hover {
+            border-color: #667eea;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .quick-action-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .recent-activity {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .recent-activity h2 {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.8rem;
+            background: white;
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-description {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .activity-time {
+            color: #bdc3c7;
+            font-size: 0.8rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .systems-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                padding: 0 1rem;
+            }
+
+            .welcome-title {
+                font-size: 1.5rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-primary, .btn-secondary {
+                text-align: center;
+                justify-content: center;
+            }
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 0.5rem;
+        }
+
+        .status-active {
+            background: #2ecc71;
+        }
+
+        .status-warning {
+            background: #f39c12;
+        }
+
+        .status-error {
+            background: #e74c3c;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        /* Login Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            animation: modalSlideIn 0.3s ease;
+        }
+
+        @keyframes modalSlideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #2c3e50;
+        }
+
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .user-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .user-card:hover {
+            border-color: #667eea;
+            background: #e8f0ff;
+            transform: translateY(-3px);
+        }
+
+        .user-card.selected {
+            border-color: #667eea;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1rem auto;
+        }
+
+        .user-card.selected .user-avatar {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .user-role {
+            font-size: 0.8rem;
+            color: #7f8c8d;
+        }
+
+        .user-card.selected .user-role {
+            color: rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                🏛️ MNS Group - Portale Centrale
+            </div>
+            <div class="user-info">
+                <div class="notifications" onclick="showNotifications()">
+                    🔔
+                    <span class="notification-badge" id="notificationCount">3</span>
+                </div>
+                <span id="welcomeMessage">Seleziona Utente</span>
+                <div id="userAvatar" style="width: 40px; height: 40px; border-radius: 50%; background: #95a5a6; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; cursor: pointer;" onclick="showUserMenu()">?</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modal Selezione Utente -->
+    <div id="userModal" class="modal" style="display: block;">
+        <div class="modal-content">
+            <h2>👥 Seleziona il tuo profilo</h2>
+            <div class="users-grid">
+                <div class="user-card" onclick="selectUser('gianluca')">
+                    <div class="user-avatar">GM</div>
+                    <div class="user-name">Gianluca</div>
+                    <div class="user-role">Amministratore di Sistema</div>
+                </div>
+                <div class="user-card" onclick="selectUser('simone')">
+                    <div class="user-avatar">SM</div>
+                    <div class="user-name">Simone</div>
+                    <div class="user-role">Socio Senior</div>
+                </div>
+                <div class="user-card" onclick="selectUser('andrea')">
+                    <div class="user-avatar">AP</div>
+                    <div class="user-name">Andrea</div>
+                    <div class="user-role">Socio Senior</div>
+                </div>
+                <div class="user-card" onclick="selectUser('nicola')">
+                    <div class="user-avatar">NP</div>
+                    <div class="user-name">Nicola</div>
+                    <div class="user-role">Socio Senior</div>
+                </div>
+                <div class="user-card" onclick="selectUser('gabriele')">
+                    <div class="user-avatar">GP</div>
+                    <div class="user-name">Gabriele</div>
+                    <div class="user-role">Socio Senior</div>
+                </div>
+            </div>
+            <div style="text-align: center;">
+                <button onclick="closeModal()" style="background: #667eea; color: white; border: none; padding: 1rem 2rem; border-radius: 10px; cursor: pointer; font-weight: 600;">
+                    🚀 Accedi al Portale
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h1 class="welcome-title">🎯 Dashboard Operativa MNS Group</h1>
+            <p class="welcome-subtitle">Accesso unificato a tutti i sistemi aziendali • Ultimo aggiornamento: <span id="currentTime"></span></p>
+            
+            <input type="text" class="search-bar" placeholder="🔍 Ricerca globale in tutti i sistemi..." onkeyup="globalSearch(this.value)">
+            
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalDomande">127</div>
+                    <div class="stat-label">Domande Attive Totali</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalClienti">65</div>
+                    <div class="stat-label">Clienti Aziendali</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalScadenze">15</div>
+                    <div class="stat-label">Scadenze Team</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="totalValore">€ 7.8M</div>
+                    <div class="stat-label">Valore Portfolio Totale</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="systems-grid">
+            <div class="system-card">
+                <div class="system-header">
+                    <div class="system-icon">🏛️</div>
+                    <div class="system-info">
+                        <h3><span class="status-indicator status-active"></span>CRM Marchi EUTM</h3>
+                        <p>Gestione completa processi registrazione marchi</p>
+                    </div>
+                </div>
+                <div class="system-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="crmDomande">127</div>
+                        <div class="mini-stat-label">Domande Totali</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="crmScadenze">15</div>
+                        <div class="mini-stat-label">Scadenze Team</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="https://gianlucamadeddu.github.io/mns-crm-marchi/" target="_blank" class="btn-primary">
+                        🚀 Apri CRM
+                    </a>
+                    <a href="#" onclick="showCrmStats()" class="btn-secondary">
+                        📊 Statistiche
+                    </a>
+                </div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-header">
+                    <div class="system-icon">💰</div>
+                    <div class="system-info">
+                        <h3><span class="status-indicator status-active"></span>Sistema Perizie</h3>
+                        <p>Valutazione economica marchi - Relief from Royalty</p>
+                    </div>
+                </div>
+                <div class="system-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="perizieAttive">28</div>
+                        <div class="mini-stat-label">Perizie Attive</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="valoreMedia">€1.8M</div>
+                        <div class="mini-stat-label">Valore Medio</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="https://gianlucamadeddu.github.io/sistema-perizie-marchi/" target="_blank" class="btn-primary">
+                        💎 Nuova Perizia
+                    </a>
+                    <a href="#" onclick="showPerizieReport()" class="btn-secondary">
+                        📈 Report
+                    </a>
+                </div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-header">
+                    <div class="system-icon">🎓</div>
+                    <div class="system-info">
+                        <h3><span class="status-indicator status-warning"></span>Portale Formazione</h3>
+                        <p>Learning interno soci - 7 moduli disponibili</p>
+                    </div>
+                </div>
+                <div class="system-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="completamentoMedio">71%</div>
+                        <div class="mini-stat-label">Completamento Medio</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="moduliRimasti">2.1</div>
+                        <div class="mini-stat-label">Moduli Medi Rimasti</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="https://gianlucamadeddu.github.io/mns-portal/" target="_blank" class="btn-primary">
+                        📚 Continua Corso
+                    </a>
+                    <a href="#" onclick="showLearningProgress()" class="btn-secondary">
+                        🏆 Progressi Team
+                    </a>
+                </div>
+            </div>
+
+            <div class="system-card">
+                <div class="system-header">
+                    <div class="system-icon">👥</div>
+                    <div class="system-info">
+                        <h3><span class="status-indicator status-active"></span>Anagrafica Clienti</h3>
+                        <p>Database clienti con sync Firebase Cloud</p>
+                    </div>
+                </div>
+                <div class="system-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="clientiTotali">65</div>
+                        <div class="mini-stat-label">Clienti Attivi</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="nuoviMese">12</div>
+                        <div class="mini-stat-label">Nuovi Questo Mese</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="https://gianlucamadeddu.github.io/anagrafica-clienti/" target="_blank" class="btn-primary">
+                        👤 Gestisci Clienti
+                    </a>
+                    <a href="#" onclick="exportClients()" class="btn-secondary">
+                        📤 Esporta Dati
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="quick-actions">
+            <h2>⚡ Azioni Rapide</h2>
+            <div class="quick-grid">
+                <a href="#" onclick="newClient()" class="quick-action">
+                    <span class="quick-action-icon">👤</span>
+                    <div>Nuovo Cliente</div>
+                </a>
+                <a href="#" onclick="newTrademark()" class="quick-action">
+                    <span class="quick-action-icon">🏛️</span>
+                    <div>Nuova Domanda</div>
+                </a>
+                <a href="#" onclick="newPerizia()" class="quick-action">
+                    <span class="quick-action-icon">💰</span>
+                    <div>Nuova Perizia</div>
+                </a>
+                <a href="#" onclick="checkDeadlines()" class="quick-action">
+                    <span class="quick-action-icon">⏰</span>
+                    <div>Scadenze</div>
+                </a>
+                <a href="#" onclick="generateReport()" class="quick-action">
+                    <span class="quick-action-icon">📊</span>
+                    <div>Report Mensile</div>
+                </a>
+                <a href="#" onclick="syncData()" class="quick-action">
+                    <span class="quick-action-icon">🔄</span>
+                    <div>Sincronizza Dati</div>
+                </a>
+            </div>
+        </div>
+
+        <div class="recent-activity">
+            <h2>📋 Attività Recenti</h2>
+            <div class="activity-item">
+                <div class="activity-icon">🏛️</div>
+                <div class="activity-content">
+                    <div class="activity-title">Domanda EUTM "TechInnovate" depositata</div>
+                    <div class="activity-description">Cliente: Innovatech Srl - Classi 9, 42</div>
+                </div>
+                <div class="activity-time">2 ore fa</div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-icon">💰</div>
+                <div class="activity-content">
+                    <div class="activity-title">Perizia completata per marchio "EcoFuture"</div>
+                    <div class="activity-description">Valore stimato: € 850.000</div>
+                </div>
+                <div class="activity-time">5 ore fa</div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-icon">👥</div>
+                <div class="activity-content">
+                    <div class="activity-title">Nuovo cliente aggiunto</div>
+                    <div class="activity-description">Digital Solutions SpA - Portfolio 3 marchi</div>
+                </div>
+                <div class="activity-time">1 giorno fa</div>
+            </div>
+            <div class="activity-item">
+                <div class="activity-icon">⚠️</div>
+                <div class="activity-content">
+                    <div class="activity-title">Scadenza rinnovo marchio "GreenTech"</div>
+                    <div class="activity-description">Scadenza: 25 Agosto 2025</div>
+                </div>
+                <div class="activity-time">2 giorni fa</div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>© 2025 MNS Group - Portale Centrale Unificato | Build v2.0 | Tutti i sistemi operativi 🚀</p>
+    </footer>
+
+    <script src="sync-config.js"></script>
+    <script>
+        // Sistema utenti MNS Group
+        const users = {
+            gianluca: {
+                name: 'Gianluca',
+                fullName: 'Gianluca Madeddu',
+                avatar: 'GM',
+                color: '#2ecc71',
+                role: 'Amministratore di Sistema',
+                stats: {
+                    domandeAttive: 32,
+                    clientiGestiti: 18,
+                    scadenze: 5,
+                    valorePortfolio: '€ 2.1M'
+                },
+                notifications: 5
+            },
+            simone: {
+                name: 'Simone',
+                fullName: 'Simone Marinello',
+                avatar: 'SM',
+                color: '#3498db',
+                role: 'Socio Senior',
+                stats: {
+                    domandeAttive: 28,
+                    clientiGestiti: 15,
+                    scadenze: 3,
+                    valorePortfolio: '€ 1.8M'
+                },
+                notifications: 3
+            },
+            andrea: {
+                name: 'Andrea',
+                fullName: 'Andrea Piga',
+                avatar: 'AP',
+                color: '#9b59b6',
+                role: 'Socio Senior',
+                stats: {
+                    domandeAttive: 25,
+                    clientiGestiti: 12,
+                    scadenze: 2,
+                    valorePortfolio: '€ 1.5M'
+                },
+                notifications: 2
+            },
+            nicola: {
+                name: 'Nicola',
+                fullName: 'Nicola Pellegrini',
+                avatar: 'NP',
+                color: '#e74c3c',
+                role: 'Socio Senior',
+                stats: {
+                    domandeAttive: 22,
+                    clientiGestiti: 11,
+                    scadenze: 4,
+                    valorePortfolio: '€ 1.3M'
+                },
+                notifications: 4
+            },
+            gabriele: {
+                name: 'Gabriele',
+                fullName: 'Gabriele Rossi',
+                avatar: 'GP',
+                color: '#f39c12',
+                role: 'Socio Senior',
+                stats: {
+                    domandeAttive: 20,
+                    clientiGestiti: 9,
+                    scadenze: 1,
+                    valorePortfolio: '€ 1.1M'
+                },
+                notifications: 1
+            }
+        };
+
+        let currentUser = null;
+
+        // Funzioni gestione utenti
+        function selectUser(userId) {
+            // Rimuovi selezione precedente
+            document.querySelectorAll('.user-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // Seleziona nuovo utente
+            event.target.closest('.user-card').classList.add('selected');
+            currentUser = users[userId];
+            
+            // Aggiorna interfaccia
+            updateUserInterface();
+        }
+
+        function updateUserInterface() {
+            if (!currentUser) return;
+
+            // Aggiorna header
+            document.getElementById('welcomeMessage').textContent = `Benvenuto, ${currentUser.name}`;
+            const avatar = document.getElementById('userAvatar');
+            avatar.textContent = currentUser.avatar;
+            avatar.style.background = currentUser.color;
+
+            // Aggiorna notifiche
+            document.getElementById('notificationCount').textContent = currentUser.notifications;
+
+            // Aggiorna statistiche dashboard
+            const statCards = document.querySelectorAll('.stat-value');
+            if (statCards.length >= 4) {
+                statCards[0].textContent = currentUser.stats.domandeAttive;
+                statCards[1].textContent = currentUser.stats.clientiGestiti;
+                statCards[2].textContent = currentUser.stats.scadenze;
+                statCards[3].textContent = currentUser.stats.valorePortfolio;
+            }
+
+            // Aggiorna attività recenti per utente
+            updateRecentActivities();
+        }
+
+        function updateRecentActivities() {
+            const activities = {
+                gianluca: [
+                    { icon: '🏛️', title: 'Domanda EUTM "TechInnovate" depositata', desc: 'Cliente: Innovatech Srl - Classi 9, 42', time: '2 ore fa' },
+                    { icon: '💰', title: 'Perizia completata per marchio "EcoFuture"', desc: 'Valore stimato: € 850.000', time: '5 ore fa' },
+                    { icon: '👥', title: 'Nuovo cliente aggiunto', desc: 'Digital Solutions SpA - Portfolio 3 marchi', time: '1 giorno fa' },
+                    { icon: '⚠️', title: 'Scadenza rinnovo marchio "GreenTech"', desc: 'Scadenza: 25 Agosto 2025', time: '2 giorni fa' }
+                ],
+                simone: [
+                    { icon: '🏛️', title: 'Ricerca anteriorità completata "SmartFlow"', desc: 'Cliente: FlowTech Ltd - Nessun conflitto', time: '1 ora fa' },
+                    { icon: '📋', title: 'Revisione domanda "DataCore"', desc: 'Correzioni richieste EUIPO - Classe 42', time: '4 ore fa' },
+                    { icon: '💰', title: 'Perizia avviata per "AgroTech"', desc: 'Metodologia Relief-from-Royalty', time: '6 ore fa' },
+                    { icon: '👥', title: 'Meeting cliente TechStart', desc: 'Discusso strategia portfolio marchi', time: '1 giorno fa' }
+                ],
+                andrea: [
+                    { icon: '💰', title: 'Perizia "BioLife" in elaborazione', desc: 'Analisi settore farmaceutico - 67% completata', time: '30 min fa' },
+                    { icon: '🏛️', title: 'Domanda EUTM "HealthTech" pubblicata', desc: 'Inizio periodo opposizione (3 mesi)', time: '3 ore fa' },
+                    { icon: '📊', title: 'Report valutazione portfolio', desc: 'Cliente: MedDevice Inc - 5 marchi analizzati', time: '8 ore fa' },
+                    { icon: '⚠️', title: 'Opposizione ricevuta su "LifeScience"', desc: 'Analisi e risposta entro 2 mesi', time: '2 giorni fa' }
+                ],
+                nicola: [
+                    { icon: '🏛️', title: 'Classificazione Nizza completata', desc: 'Marchio "EcoEnergy" - Classi 4, 7, 42', time: '45 min fa' },
+                    { icon: '📋', title: 'Aggiornamento anagrafica cliente', desc: 'GreenPower Srl - Nuovi dati contatto', time: '2 ore fa' },
+                    { icon: '💰', title: 'Perizia "SolarTech" approvata', desc: 'Valore finale: € 1.250.000', time: '5 ore fa' },
+                    { icon: '🎓', title: 'Modulo formazione completato', desc: 'Procedure EUIPO avanzate - Certificato ottenuto', time: '1 giorno fa' }
+                ],
+                gabriele: [
+                    { icon: '📋', title: 'Controllo distintività "FutureApp"', desc: 'Verifica conformità normativa - Approvato', time: '20 min fa' },
+                    { icon: '🏛️', title: 'Preparazione deposito "CloudTech"', desc: 'Documentazione completa - Pronto per invio', time: '1 ora fa' },
+                    { icon: '👥', title: 'Primo contatto StartupTech', desc: 'Portfolio 2 marchi da registrare', time: '4 ore fa' },
+                    { icon: '🎓', title: 'Avanzamento formazione', desc: 'Modulo "Ricerca Anteriorità" - 75% completato', time: '6 ore fa' }
+                ]
+            };
+
+            const container = document.querySelector('.recent-activity');
+            const currentActivities = activities[Object.keys(users).find(key => users[key] === currentUser)] || activities.gianluca;
+            
+            let activityHTML = '<h2>📋 Attività Recenti</h2>';
+            currentActivities.forEach(activity => {
+                activityHTML += `
+                    <div class="activity-item">
+                        <div class="activity-icon">${activity.icon}</div>
+                        <div class="activity-content">
+                            <div class="activity-title">${activity.title}</div>
+                            <div class="activity-description">${activity.desc}</div>
+                        </div>
+                        <div class="activity-time">${activity.time}</div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = activityHTML;
+        }
+
+        function closeModal() {
+            if (!currentUser) {
+                alert('⚠️ Seleziona un utente prima di continuare');
+                return;
+            }
+            document.getElementById('userModal').style.display = 'none';
+        }
+
+        function showUserMenu() {
+            if (!currentUser) return;
+            
+            const userInfo = `
+                👤 ${currentUser.fullName}
+                📋 ${currentUser.role}
+                
+                🔄 Cambia Utente
+                ⚙️ Impostazioni
+                🚪 Logout
+            `;
+            
+            if (confirm(userInfo + '\n\nVuoi cambiare utente?')) {
+                document.getElementById('userModal').style.display = 'block';
+            }
+        }
+
+        // Aggiorna l'orario in tempo reale
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleString('it-IT', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric', 
+                hour: '2-digit', 
+                minute: '2-digit' 
+            });
+            document.getElementById('currentTime').textContent = timeString;
+        }
+
+        // Funzioni interattive aggiornate
+        function showNotifications() {
+            if (!currentUser) return;
+            
+            const notificationsList = {
+                gianluca: '🔔 Notifiche Gianluca:\n\n• 5 scadenze in arrivo questa settimana\n• 3 nuove domande da processare\n• 2 perizie completate\n• Aggiornamento CRM disponibile\n• Review mensile programmata',
+                simone: '🔔 Notifiche Simone:\n\n• 3 ricerche anteriorità completate\n• 2 domande in fase di esame\n• 1 cliente in attesa di risposta\n• Formazione Advanced disponibile',
+                andrea: '🔔 Notifiche Andrea:\n\n• 2 perizie in scadenza questa settimana\n• 1 opposizione da gestire\n• Portfolio report completato\n• Meeting cliente venerdì',
+                nicola: '🔔 Notifiche Nicola:\n\n• 4 classificazioni da completare\n• 2 aggiornamenti anagrafica\n• 1 perizia approvata\n• Modulo formazione disponibile',
+                gabriele: '🔔 Notifiche Gabriele:\n\n• 1 controllo distintività completato\n• 2 depositi pronti\n• Nuovo cliente da contattare\n• Avanzamento formazione 75%'
+            };
+            
+            const userKey = Object.keys(users).find(key => users[key] === currentUser);
+            alert(notificationsList[userKey] || notificationsList.gianluca);
+        }
+
+        function globalSearch(query) {
+            if (query.length > 2) {
+                console.log(`Ricerca globale per ${currentUser?.name}: ${query}`);
+            }
+        }
+
+        function showCrmStats() {
+            if (!currentUser) return;
+            alert(`📊 Statistiche CRM - ${currentUser.name}:\n\n• ${currentUser.stats.domandeAttive} domande attive\n• 89% tasso di successo\n• Tempo medio processo: 45 giorni\n• ${Math.floor(currentUser.stats.domandeAttive * 0.6)} domande in fase di esame`);
+        }
+
+        function showPerizieReport() {
+            if (!currentUser) return;
+            const perizie = Math.floor(currentUser.stats.domandeAttive * 0.4);
+            alert(`📈 Report Perizie - ${currentUser.name}:\n\n• ${perizie} perizie attive\n• Valore medio: €2.1M\n• Tempo medio valutazione: 7 giorni\n• 96% accuracy rating`);
+        }
+
+        function showLearningProgress() {
+            const progress = {
+                gianluca: `🏆 Progressi Team (vista ${currentUser.name}):\n\n• Gianluca: 85% (6/7 moduli)\n• Simone: 78% (5.5/7 moduli)\n• Andrea: 71% (5/7 moduli)\n• Nicola: 67% (4.5/7 moduli)\n• Gabriele: 54% (3.5/7 moduli)`,
+                simone: '🏆 Progressi Personali:\n\n• Completati: 5.5/7 moduli (78%)\n• Prossimo: "Opposizioni Avanzate"\n• Tempo stimato: 2 ore\n• Certificazione: In corso',
+                andrea: '🏆 Stato Formazione:\n\n• Moduli completati: 5/7 (71%)\n• Focus: Perizie e Valutazioni\n• Specializzazione: Settore Medico\n• Prossimo obiettivo: Expert Level',
+                nicola: '🏆 Avanzamento Personale:\n\n• Progresso: 4.5/7 moduli (67%)\n• Area forte: Classificazioni Nizza\n• Da migliorare: Ricerche Anteriorità\n• Target: 80% entro fine mese',
+                gabriele: '🏆 Percorso Formativo:\n\n• Completamento: 3.5/7 moduli (54%)\n• Modulo attuale: "Ricerca Anteriorità"\n• Velocità: Sopra la media\n• Obiettivo: Certificazione Q4'
+            };
+            
+            const userKey = Object.keys(users).find(key => users[key] === currentUser);
+            alert(progress[userKey] || progress.gianluca);
+        }
+
+        function exportClients() {
+            if (!currentUser) return;
+            alert(`📤 Esportazione Clienti - ${currentUser.name}:\n\nGenerando file Excel con:\n• ${currentUser.stats.clientiGestiti} clienti gestiti\n• Dati di contatto completi\n• Portfolio marchi per cliente\n• Storico operazioni`);
+        }
+
+        function newClient() {
+            window.open('https://gianlucamadeddu.github.io/anagrafica-clienti/', '_blank');
+        }
+
+        function newTrademark() {
+            window.open('https://gianlucamadeddu.github.io/mns-crm-marchi/', '_blank');
+        }
+
+        function newPerizia() {
+            window.open('https://gianlucamadeddu.github.io/sistema-perizie-marchi/', '_blank');
+        }
+
+        function checkDeadlines() {
+            if (!currentUser) return;
+            
+            const deadlines = {
+                gianluca: '⏰ Scadenze Imminenti (Gianluca):\n\n• 25/08: Rinnovo GreenTech\n• 28/08: Opposizione TechFlow\n• 02/09: Deposito EcoLife\n• 05/09: Esame FutureApp\n• 10/09: Meeting TechInnovate',
+                simone: '⏰ Scadenze Imminenti (Simone):\n\n• 26/08: Ricerca SmartFlow\n• 30/08: Revisione DataCore\n• 03/09: Report TechStart\n• 07/09: Formazione Advanced',
+                andrea: '⏰ Scadenze Imminenti (Andrea):\n\n• 24/08: Perizia BioLife\n• 27/08: Risposta opposizione LifeScience\n• 01/09: Report MedDevice\n• 08/09: Analisi portfolio HealthTech',
+                nicola: '⏰ Scadenze Imminenti (Nicola):\n\n• 23/08: Classificazione EcoEnergy\n• 29/08: Aggiornamento GreenPower\n• 04/09: Certificazione formazione\n• 11/09: Review processi',
+                gabriele: '⏰ Scadenze Imminenti (Gabriele):\n\n• 22/08: Deposito CloudTech\n• 26/08: Contatto StartupTech\n• 31/08: Modulo Ricerca Anteriorità\n• 06/09: Controllo distintività batch'
+            };
+            
+            const userKey = Object.keys(users).find(key => users[key] === currentUser);
+            alert(deadlines[userKey] || deadlines.gianluca);
+        }
+
+        function generateReport() {
+            if (!currentUser) return;
+            alert(`📊 Generazione Report Mensile - ${currentUser.name}:\n\n• KPI operativi personali\n• Analisi portfolio clienti gestiti\n• Performance vs obiettivi\n• Proiezioni trimestre\n\nTempo stimato: 2 minuti`);
+        }
+
+        function syncData() {
+            if (!currentUser) return;
+            alert(`🔄 Sincronizzazione Dati - ${currentUser.name}:\n\n✅ CRM Marchi → Aggiornato\n✅ Sistema Perizie → Sincronizzato\n✅ Anagrafica Clienti → Allineata\n✅ Portale Formazione → Aggiornato\n\n📊 Dashboard aggiornata con ultimi dati`);
+            
+            // Simula aggiornamento dati
+            setTimeout(() => {
+                updateUserInterface();
+                alert('✨ Sincronizzazione completata!');
+            }, 2000);
+        }
+
+        // Inizializza la pagina
+        updateTime();
+        setInterval(updateTime, 60000);
+
+        // Simulazione dati real-time personalizzati per utente
+        setInterval(() => {
+            if (!currentUser) return;
+            
+            // Piccole variazioni casuali nei dati utente
+            const variation = Math.random() > 0.8 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+            if (variation !== 0) {
+                currentUser.stats.domandeAttive = Math.max(1, currentUser.stats.domandeAttive + variation);
+                updateUserInterface();
+            }
+        }, 45000);
+
+        // Animazioni al caricamento
+        window.addEventListener('load', () => {
+            const cards = document.querySelectorAll('.system-card, .stat-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
