@@ -1,0 +1,131 @@
+{
+  "project": {
+    "name": "MNS Group Portal Centrale",
+    "version": "2.0.0",
+    "description": "Portale unificato per accesso a tutti i sistemi MNS Group",
+    "author": "MNS Group",
+    "lastUpdate": "2025-08-20",
+    "environment": "production"
+  },
+  
+  "systems": {
+    "crm": {
+      "name": "CRM Marchi EUTM",
+      "url": "https://gianlucamadeddu.github.io/mns-crm-marchi/",
+      "api_endpoint": "/api/crm",
+      "status": "active",
+      "priority": 1,
+      "sync_interval": 30,
+      "timeout": 10000,
+      "description": "Gestione completa processi registrazione marchi",
+      "features": ["domande", "scadenze", "clienti", "documenti"],
+      "last_sync": null
+    },
+    
+    "perizie": {
+      "name": "Sistema Perizie Marchi",
+      "url": "https://gianlucamadeddu.github.io/sistema-perizie-marchi/",
+      "api_endpoint": "/api/perizie",
+      "status": "active",
+      "priority": 1,
+      "sync_interval": 30,
+      "timeout": 10000,
+      "description": "Valutazione economica marchi - Relief from Royalty",
+      "features": ["valutazioni", "calcoli", "report", "storico"],
+      "last_sync": null
+    },
+    
+    "portal": {
+      "name": "Portale Formazione",
+      "url": "https://gianlucamadeddu.github.io/mns-portal/",
+      "api_endpoint": "/api/learning",
+      "status": "active",
+      "priority": 2,
+      "sync_interval": 60,
+      "timeout": 10000,
+      "description": "Learning interno soci - 7 moduli disponibili",
+      "features": ["moduli", "progressi", "certificazioni", "team"],
+      "last_sync": null
+    },
+    
+    "anagrafica": {
+      "name": "Anagrafica Clienti",
+      "url": "https://gianlucamadeddu.github.io/anagrafica-clienti/",
+      "api_endpoint": "/api/clients",
+      "status": "active",
+      "priority": 1,
+      "sync_interval": 30,
+      "timeout": 10000,
+      "description": "Database clienti con sync Firebase Cloud",
+      "features": ["clienti", "contatti", "portfolio", "storico"],
+      "last_sync": null
+    }
+  },
+  
+  "users": {
+    "gianluca": {
+      "id": "gianluca_madeddu",
+      "name": "Gianluca",
+      "fullName": "Gianluca Madeddu",
+      "email": "gianluca@mnsgroup.it",
+      "role": "Amministratore di Sistema",
+      "avatar": "GM",
+      "color": "#2ecc71",
+      "permissions": ["admin", "read", "write", "delete", "config"],
+      "systems_access": ["crm", "perizie", "portal", "anagrafica"],
+      "dashboard_widgets": ["stats", "activities", "notifications", "systems"]
+    },
+    
+    "simone": {
+      "id": "simone_marinello",
+      "name": "Simone",
+      "fullName": "Simone Marinello",
+      "email": "simone@mnsgroup.it",
+      "role": "Socio Senior",
+      "avatar": "SM",
+      "color": "#3498db",
+      "permissions": ["read", "write"],
+      "systems_access": ["crm", "perizie", "portal", "anagrafica"],
+      "dashboard_widgets": ["stats", "activities", "notifications"]
+    },
+    
+    "andrea": {
+      "id": "andrea_piga",
+      "name": "Andrea",
+      "fullName": "Andrea Piga",
+      "email": "andrea@mnsgroup.it",
+      "role": "Socio Senior",
+      "avatar": "AP",
+      "color": "#9b59b6",
+      "permissions": ["read", "write"],
+      "systems_access": ["crm", "perizie", "portal", "anagrafica"],
+      "dashboard_widgets": ["stats", "activities", "notifications"]
+    },
+    
+    "nicola": {
+      "id": "nicola_pellegrini",
+      "name": "Nicola",
+      "fullName": "Nicola Pellegrini",
+      "email": "nicola@mnsgroup.it",
+      "role": "Socio Senior",
+      "avatar": "NP",
+      "color": "#e74c3c",
+      "permissions": ["read", "write"],
+      "systems_access": ["crm", "perizie", "portal", "anagrafica"],
+      "dashboard_widgets": ["stats", "activities", "notifications"]
+    },
+    
+    "gabriele": {
+      "id": "gabriele_rossi",
+      "name": "Gabriele",
+      "fullName": "Gabriele Rossi",
+      "email": "gabriele@mnsgroup.it",
+      "role": "Socio Senior",
+      "avatar": "GP",
+      "color": "#f39c12",
+      "permissions": ["read", "write"],
+      "systems_access": ["crm", "perizie", "portal", "anagrafica"],
+      "dashboard_widgets": ["stats", "activities", "notifications"]
+    }
+  }
+}
