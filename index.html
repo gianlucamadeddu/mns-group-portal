@@ -636,97 +636,14 @@
                     <div class="stat-label">Scadenze Team</div>
                 </div>
                 <div class="stat-card">
-                    <div class="stat-value" id="totalValore">€ 7.8M</div>
-                    <div class="stat-label">Valore Portfolio Totale</div>
+                    <div class="stat-value" id="totalValore">€ 19.300</div>
+                    <div class="stat-label">Ricavi Totali Registrati</div>
                 </div>
             </div>
         </div>
 
         <div class="systems-grid">
-            <div class="system-card">
-                <div class="system-header">
-                    <div class="system-icon">🏛️</div>
-                    <div class="system-info">
-                        <h3><span class="status-indicator status-active"></span>CRM Marchi EUTM</h3>
-                        <p>Gestione completa processi registrazione marchi</p>
-                    </div>
-                </div>
-                <div class="system-stats">
-                    <div class="mini-stat">
-                        <div class="mini-stat-value" id="crmDomande">127</div>
-                        <div class="mini-stat-label">Domande Totali</div>
-                    </div>
-                    <div class="mini-stat">
-                        <div class="mini-stat-value" id="crmScadenze">15</div>
-                        <div class="mini-stat-label">Scadenze Team</div>
-                    </div>
-                </div>
-                <div class="action-buttons">
-                    <a href="https://gianlucamadeddu.github.io/mns-crm-marchi/" target="_blank" class="btn-primary">
-                        🚀 Apri CRM
-                    </a>
-                    <a href="#" onclick="showCrmStats()" class="btn-secondary">
-                        📊 Statistiche
-                    </a>
-                </div>
-            </div>
-
-            <div class="system-card">
-                <div class="system-header">
-                    <div class="system-icon">💰</div>
-                    <div class="system-info">
-                        <h3><span class="status-indicator status-active"></span>Sistema Perizie</h3>
-                        <p>Valutazione economica marchi - Relief from Royalty</p>
-                    </div>
-                </div>
-                <div class="system-stats">
-                    <div class="mini-stat">
-                        <div class="mini-stat-value" id="perizieAttive">28</div>
-                        <div class="mini-stat-label">Perizie Attive</div>
-                    </div>
-                    <div class="mini-stat">
-                        <div class="mini-stat-value" id="valoreMedia">€1.8M</div>
-                        <div class="mini-stat-label">Valore Medio</div>
-                    </div>
-                </div>
-                <div class="action-buttons">
-                    <a href="https://gianlucamadeddu.github.io/sistema-perizie-marchi/" target="_blank" class="btn-primary">
-                        💎 Nuova Perizia
-                    </a>
-                    <a href="#" onclick="showPerizieReport()" class="btn-secondary">
-                        📈 Report
-                    </a>
-                </div>
-            </div>
-
-            <div class="system-card">
-                <div class="system-header">
-                    <div class="system-icon">🎓</div>
-                    <div class="system-info">
-                        <h3><span class="status-indicator status-warning"></span>Portale Formazione</h3>
-                        <p>Learning interno soci - 7 moduli disponibili</p>
-                    </div>
-                </div>
-                <div class="system-stats">
-                    <div class="mini-stat">
-                        <div class="mini-stat-value" id="completamentoMedio">71%</div>
-                        <div class="mini-stat-label">Completamento Medio</div>
-                    </div>
-                    <div class="mini-stat">
-                        <div class="mini-stat-value" id="moduliRimasti">2.1</div>
-                        <div class="mini-stat-label">Moduli Medi Rimasti</div>
-                    </div>
-                </div>
-                <div class="action-buttons">
-                    <a href="https://gianlucamadeddu.github.io/mns-portal/" target="_blank" class="btn-primary">
-                        📚 Continua Corso
-                    </a>
-                    <a href="#" onclick="showLearningProgress()" class="btn-secondary">
-                        🏆 Progressi Team
-                    </a>
-                </div>
-            </div>
-
+            <!-- 1. Anagrafica Clienti -->
             <div class="system-card">
                 <div class="system-header">
                     <div class="system-icon">👥</div>
@@ -754,11 +671,13 @@
                     </a>
                 </div>
             </div>
-       <div class="system-card">
+
+            <!-- 2. Calendario -->
+            <div class="system-card">
                 <div class="system-header">
                     <div class="system-icon">📅</div>
                     <div class="system-info">
-                        <h3><span class="status-indicator status-active"></span>Calendario Aziendale</h3>
+                        <h3><span class="status-indicator status-active"></span>Calendario</h3>
                         <p>Gestione eventi e riunioni MNS Group</p>
                     </div>
                 </div>
@@ -778,6 +697,180 @@
                     </a>
                     <a href="https://calendar.google.com/calendar/u/0/r/eventedit" target="_blank" class="btn-secondary">
                         ➕ Nuovo Evento
+                    </a>
+                </div>
+            </div>
+
+            <!-- 3. Formazione -->
+            <div class="system-card">
+                <div class="system-header">
+                    <div class="system-icon">🎓</div>
+                    <div class="system-info">
+                        <h3><span class="status-indicator status-warning"></span>Formazione</h3>
+                        <p>Learning interno soci - 7 moduli disponibili</p>
+                    </div>
+                </div>
+                <div class="system-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="completamentoMedio">71%</div>
+                        <div class="mini-stat-label">Completamento Medio</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="moduliRimasti">2.1</div>
+                        <div class="mini-stat-label">Moduli Medi Rimasti</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="https://gianlucamadeddu.github.io/mns-portal/" target="_blank" class="btn-primary">
+                        📚 Continua Corso
+                    </a>
+                    <a href="#" onclick="showLearningProgress()" class="btn-secondary">
+                        🏆 Progressi Team
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Perizie -->
+            <div class="system-card">
+                <div class="system-header">
+                    <div class="system-icon">💰</div>
+                    <div class="system-info">
+                        <h3><span class="status-indicator status-active"></span>Perizie</h3>
+                        <p>Valutazione economica marchi - Relief from Royalty</p>
+                    </div>
+                </div>
+                <div class="system-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="perizieAttive">28</div>
+                        <div class="mini-stat-label">Perizie Attive</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="valoreMedia">€1.8M</div>
+                        <div class="mini-stat-label">Valore Medio</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="https://gianlucamadeddu.github.io/sistema-perizie-marchi/" target="_blank" class="btn-primary">
+                        💎 Nuova Perizia
+                    </a>
+                    <a href="#" onclick="showPerizieReport()" class="btn-secondary">
+                        📈 Report
+                    </a>
+                </div>
+            </div>
+
+            <!-- 5. Marchi -->
+            <div class="system-card">
+                <div class="system-header">
+                    <div class="system-icon">🏛️</div>
+                    <div class="system-info">
+                        <h3><span class="status-indicator status-active"></span>Marchi</h3>
+                        <p>Gestione completa processi registrazione marchi</p>
+                    </div>
+                </div>
+                <div class="system-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="crmDomande">127</div>
+                        <div class="mini-stat-label">Domande Totali</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="crmScadenze">15</div>
+                        <div class="mini-stat-label">Scadenze Team</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="https://gianlucamadeddu.github.io/mns-crm-marchi/" target="_blank" class="btn-primary">
+                        🚀 Apri CRM
+                    </a>
+                    <a href="#" onclick="showCrmStats()" class="btn-secondary">
+                        📊 Statistiche
+                    </a>
+                </div>
+            </div>
+
+            <!-- 6. Bandi -->
+            <div class="system-card">
+                <div class="system-header">
+                    <div class="system-icon">📋</div>
+                    <div class="system-info">
+                        <h3><span class="status-indicator status-active"></span>Bandi</h3>
+                        <p>Gestione completa bandi di gara e procedure pubbliche</p>
+                    </div>
+                </div>
+                <div class="system-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="bandiAttivi">12</div>
+                        <div class="mini-stat-label">Bandi Attivi</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="scadenzeBandi">5</div>
+                        <div class="mini-stat-label">Scadenze Prossime</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="https://gianlucamadeddu.github.io/gestione-bandi-/" target="_blank" class="btn-primary">
+                        📝 Gestisci Bandi
+                    </a>
+                    <a href="#" onclick="showBandiStats()" class="btn-secondary">
+                        📊 Report Bandi
+                    </a>
+                </div>
+            </div>
+
+            <!-- 7. Business Plan Generator -->
+            <div class="system-card">
+                <div class="system-header">
+                    <div class="system-icon">🤖</div>
+                    <div class="system-info">
+                        <h3><span class="status-indicator status-active"></span>Business Plan Generator</h3>
+                        <p>Generatore AI per business plan professionali</p>
+                    </div>
+                </div>
+                <div class="system-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="planGenerati">34</div>
+                        <div class="mini-stat-label">Plan Generati</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="templateDisponibili">15</div>
+                        <div class="mini-stat-label">Template Disponibili</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="https://gianlucamadeddu.github.io/business-plan-generator-ai/" target="_blank" class="btn-primary">
+                        🚀 Genera Plan
+                    </a>
+                    <a href="#" onclick="showBusinessPlanStats()" class="btn-secondary">
+                        📈 Statistiche
+                    </a>
+                </div>
+            </div>
+
+            <!-- 8. Sistema di Contabilità -->
+            <div class="system-card">
+                <div class="system-header">
+                    <div class="system-icon">💼</div>
+                    <div class="system-info">
+                        <h3><span class="status-indicator status-active"></span>Sistema di Contabilità</h3>
+                        <p>Sistema completo per la gestione contabile aziendale</p>
+                    </div>
+                </div>
+                <div class="system-stats">
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="fattureEmesse">248</div>
+                        <div class="mini-stat-label">Fatture Emesse</div>
+                    </div>
+                    <div class="mini-stat">
+                        <div class="mini-stat-value" id="scadenzeContabili">7</div>
+                        <div class="mini-stat-label">Scadenze Mese</div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <a href="https://gianlucamadeddu.github.io/mns-contabilita/" target="_blank" class="btn-primary">
+                        💰 Apri Contabilità
+                    </a>
+                    <a href="#" onclick="showContabilitaStats()" class="btn-secondary">
+                        📊 Bilanci
                     </a>
                 </div>
             </div>
@@ -851,10 +944,9 @@
     </div>
 
     <footer class="footer">
-        <p>© 2025 MNS Group - Portale Centrale Unificato | Build v2.0 | Tutti i sistemi operativi 🚀</p>
+        <p>© 2025 MNS Group - Portale Centrale Unificato | Build v2.1 | Tutti i sistemi operativi 🚀</p>
     </footer>
 
-    <script src="sync-config.js"></script>
     <script>
         // Sistema utenti MNS Group
         const users = {
@@ -965,11 +1057,149 @@
                 statCards[0].textContent = currentUser.stats.domandeAttive;
                 statCards[1].textContent = currentUser.stats.clientiGestiti;
                 statCards[2].textContent = currentUser.stats.scadenze;
-                statCards[3].textContent = currentUser.stats.valorePortfolio;
+                // I ricavi totali vengono sempre dall'anagrafica clienti, non dall'utente
+                fetchTotalRevenue();
             }
 
             // Aggiorna attività recenti per utente
             updateRecentActivities();
+        }
+
+        // Funzione per recuperare i ricavi totali dall'anagrafica clienti
+        async function fetchTotalRevenue() {
+            try {
+                const ricaviElement = document.getElementById('totalValore');
+                
+                // 🎯 COLLEGAMENTO AUTOMATICO CON ANAGRAFICA CLIENTI
+                // Cerca il dato nei possibili modi che l'anagrafica può salvarlo
+                const possibiliChiavi = [
+                    'ricavi_totali',                    // Chiave principale
+                    'anagrafica_ricavi_totali',         // Alternativa specifica
+                    'mns_ricavi_totali',               // Chiave MNS
+                    'clienti_ricavi_totali',           // Variante clienti
+                    'total_ricavi',                    // Inglese/italiano
+                    'dashboard_ricavi',                // Per dashboard
+                    'anagrafica_clienti_ricavi'        // Nome completo app
+                ];
+                
+                let ricaviTrovati = null;
+                let valoreRicavi = 19300; // Valore iniziale dall'anagrafica
+                
+                // 1. Controlla localStorage per aggiornamenti
+                for (const chiave of possibiliChiavi) {
+                    const valore = localStorage.getItem(chiave);
+                    if (valore && valore !== 'null' && valore !== 'undefined') {
+                        console.log(`📊 Ricavi aggiornati dall'anagrafica: ${valore} (chiave: ${chiave})`);
+                        ricaviTrovati = parseFloat(valore);
+                        if (!isNaN(ricaviTrovati)) {
+                            valoreRicavi = ricaviTrovati;
+                            break;
+                        }
+                    }
+                }
+                
+                // 2. Se non trova aggiornamenti, mantiene il valore dall'anagrafica (€19.300)
+                if (!ricaviTrovati) {
+                    console.log('📊 Uso valore dall\'anagrafica clienti: €19.300');
+                }
+                
+                // 3. Aggiorna la visualizzazione
+                const valoreFormattato = `€ ${valoreRicavi.toLocaleString('it-IT')}`;
+                ricaviElement.textContent = valoreFormattato;
+                
+                // 4. Log per monitoraggio
+                console.log(`💰 Ricavi totali mostrati: ${valoreFormattato}`);
+                
+                return valoreRicavi;
+                
+            } catch (error) {
+                console.error('❌ Errore nel recupero ricavi:', error);
+                // In caso di errore, mantieni il valore dall'anagrafica
+                document.getElementById('totalValore').textContent = '€ 19.300';
+                return 19300;
+            }
+        }
+
+        // 🔄 MONITORAGGIO AUTOMATICO RICAVI
+        function startRicaviMonitoring() {
+            console.log('🚀 Avvio monitoraggio automatico ricavi dall\'anagrafica clienti...');
+            
+            // 1. Storage Event Listener (si attiva quando localStorage cambia)
+            window.addEventListener('storage', function(e) {
+                if (e.key && (e.key.includes('ricavi') || e.key.includes('revenue'))) {
+                    console.log('📡 Rilevato cambio ricavi via Storage Event:', e.key, '=', e.newValue);
+                    setTimeout(fetchTotalRevenue, 500); // Piccolo delay per sicurezza
+                }
+            });
+            
+            // 2. Polling periodico ogni 30 secondi per sicurezza
+            setInterval(() => {
+                fetchTotalRevenue();
+            }, 30000);
+            
+            // 3. Check più frequente ogni 5 secondi per i primi 2 minuti (per aggiornamenti rapidi)
+            let quickChecks = 0;
+            const quickInterval = setInterval(() => {
+                fetchTotalRevenue();
+                quickChecks++;
+                if (quickChecks >= 24) { // 24 * 5sec = 2 minuti
+                    clearInterval(quickInterval);
+                    console.log('⏰ Quick check completato, continuo con polling ogni 30 secondi');
+                }
+            }, 5000);
+            
+            // 4. Check immediato
+            fetchTotalRevenue();
+        }
+
+        // Funzione per sincronizzare i dati tra le applicazioni
+        function syncDataAcrossApps() {
+            console.log('🔗 Configurazione sincronizzazione cross-app...');
+            
+            // Listener per messaggi da altre applicazioni (PostMessage API)
+            window.addEventListener('message', function(event) {
+                // Sicurezza: verifica origine
+                if (event.origin !== 'https://gianlucamadeddu.github.io') {
+                    return;
+                }
+                
+                console.log('📨 Messaggio ricevuto da:', event.origin, event.data);
+                
+                // Gestione messaggi ricavi dall'anagrafica clienti
+                if (event.data.type === 'ANAGRAFICA_RICAVI_UPDATE') {
+                    const ricavi = parseFloat(event.data.ricavi || event.data.value || event.data.ricavi_totali);
+                    if (!isNaN(ricavi)) {
+                        console.log('💰 Ricavi aggiornati via PostMessage:', ricavi);
+                        localStorage.setItem('ricavi_totali', ricavi.toString());
+                        setTimeout(fetchTotalRevenue, 100);
+                    }
+                }
+                
+                // Supporto messaggi legacy
+                if (event.data.type === 'REVENUE_UPDATE') {
+                    const ricavi = parseFloat(event.data.value);
+                    if (!isNaN(ricavi)) {
+                        console.log('💰 Ricavi aggiornati via legacy message:', ricavi);
+                        localStorage.setItem('ricavi_totali', ricavi.toString());
+                        setTimeout(fetchTotalRevenue, 100);
+                    }
+                }
+            });
+            
+            // Messaggio di ready per l'anagrafica clienti
+            setTimeout(() => {
+                try {
+                    // Informa l'anagrafica che il portale è pronto a ricevere dati
+                    if (window.parent !== window) {
+                        window.parent.postMessage({
+                            type: 'PORTALE_READY',
+                            source: 'mns-group-portal'
+                        }, 'https://gianlucamadeddu.github.io');
+                    }
+                } catch (e) {
+                    console.log('📡 PostMessage setup completato (no parent window)');
+                }
+            }, 1000);
         }
 
         function updateRecentActivities() {
@@ -1116,6 +1346,22 @@
             alert(`📤 Esportazione Clienti - ${currentUser.name}:\n\nGenerando file Excel con:\n• ${currentUser.stats.clientiGestiti} clienti gestiti\n• Dati di contatto completi\n• Portfolio marchi per cliente\n• Storico operazioni`);
         }
 
+        // Funzioni per i nuovi sistemi
+        function showBandiStats() {
+            if (!currentUser) return;
+            alert(`📋 Statistiche Bandi - ${currentUser.name}:\n\n• 12 bandi monitorati\n• 5 scadenze prossime\n• 3 bandi vinti quest'anno\n• 2 in fase di valutazione`);
+        }
+
+        function showBusinessPlanStats() {
+            if (!currentUser) return;
+            alert(`🤖 Statistiche Business Plan - ${currentUser.name}:\n\n• 34 business plan generati\n• 15 template disponibili\n• 89% accuracy AI\n• Tempo medio: 12 minuti`);
+        }
+
+        function showContabilitaStats() {
+            if (!currentUser) return;
+            alert(`💼 Statistiche Contabilità - ${currentUser.name}:\n\n• 248 fatture emesse quest'anno\n• 7 scadenze questo mese\n• Ricavi: €2.8M\n• Marginalità: 65%`);
+        }
+
         function newClient() {
             window.open('https://gianlucamadeddu.github.io/anagrafica-clienti/', '_blank');
         }
@@ -1150,7 +1396,7 @@
 
         function syncData() {
             if (!currentUser) return;
-            alert(`🔄 Sincronizzazione Dati - ${currentUser.name}:\n\n✅ CRM Marchi → Aggiornato\n✅ Sistema Perizie → Sincronizzato\n✅ Anagrafica Clienti → Allineata\n✅ Portale Formazione → Aggiornato\n\n📊 Dashboard aggiornata con ultimi dati`);
+            alert(`🔄 Sincronizzazione Dati - ${currentUser.name}:\n\n✅ CRM Marchi → Aggiornato\n✅ Sistema Perizie → Sincronizzato\n✅ Anagrafica Clienti → Allineata\n✅ Portale Formazione → Aggiornato\n✅ Gestione Bandi → Sincronizzato\n✅ Business Plan Generator → Aggiornato\n✅ Sistema Contabilità → Allineato\n\n📊 Dashboard aggiornata con ultimi dati`);
             
             // Simula aggiornamento dati
             setTimeout(() => {
@@ -1162,6 +1408,12 @@
         // Inizializza la pagina
         updateTime();
         setInterval(updateTime, 60000);
+        
+        // 🚀 AVVIA MONITORAGGIO RICAVI AUTOMATICO
+        startRicaviMonitoring();
+        
+        // Inizializza sincronizzazione dati cross-app
+        syncDataAcrossApps();
 
         // Simulazione dati real-time personalizzati per utente
         setInterval(() => {
