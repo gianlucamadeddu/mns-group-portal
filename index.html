@@ -557,9 +557,38 @@
         .user-card.selected .user-role {
             color: rgba(255, 255, 255, 0.8);
         }
+
+        /* Indicatore sincronizzazione */
+        .sync-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border: 1px solid #f0f0f0;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .sync-indicator.connected {
+            border-color: #2ecc71;
+            color: #2ecc71;
+        }
+
+        .sync-indicator.disconnected {
+            border-color: #e74c3c;
+            color: #e74c3c;
+        }
     </style>
 </head>
 <body>
+    <!-- Indicatore Sincronizzazione -->
+    <div id="syncIndicator" class="sync-indicator disconnected">
+        🔄 Sincronizzazione: Non connesso
+    </div>
+
     <header class="header">
         <div class="header-content">
             <div class="logo">
@@ -948,6 +977,11 @@
     </footer>
 
     <script>
+        // 🎯 SINCRONIZZAZIONE AVANZATA CON ANAGRAFICA CLIENTI
+        let lastKnownRevenue = 19300; // Valore iniziale dall'anagrafica
+        let syncStatus = 'disconnected';
+        let ricaviCheckCount = 0;
+
         // Sistema utenti MNS Group
         const users = {
             gianluca: {
@@ -1024,6 +1058,178 @@
 
         let currentUser = null;
 
+        // 🔗 FUNZIONE PRINCIPALE: RECUPERO RICAVI DALL'ANAGRAFICA CLIENTI
+        function fetchTotalRevenue() {
+            try {
+                ricaviCheckCount++;
+                console.log(`🔍 Check ricavi #${ricaviCheckCount} dall'anagrafica clienti...`);
+                
+                const ricaviElement = document.getElementById('totalValore');
+                let nuoviRicavi = null;
+                let fonteRicavi = 'default';
+
+                // 🎯 METODO 1: Variabili globali JavaScript (metodo principale)
+                const possibiliVariabili = [
+                    'ricavi_totali',
+                    'anagrafica_clienti_ricavi',
+                    'anagrafica_clienti_ricavi_totali',
+                    'mns_ricavi_totali'
+                ];
+                
+                for (const variabile of possibiliVariabili) {
+                    if (window[variabile] !== undefined && window[variabile] !== null) {
+                        const valore = parseFloat(window[variabile]);
+                        if (!isNaN(valore) && valore > 0) {
+                            nuoviRicavi = valore;
+                            fonteRicavi = `window.${variabile}`;
+                            console.log(`✅ Ricavi trovati da ${fonteRicavi}: €${valore.toLocaleString()}`);
+                            break;
+                        }
+                    }
+                }
+
+                // 🎯 METODO 2: Se nessuna variabile globale, mantieni il valore dell'anagrafica
+                if (!nuoviRicavi) {
+                    nuoviRicavi = lastKnownRevenue;
+                    fonteRicavi = 'anagrafica-default';
+                    console.log(`📊 Uso valore dell'anagrafica clienti: €${nuoviRicavi.toLocaleString()}`);
+                }
+
+                // 🎯 AGGIORNA DISPLAY SE CAMBIATO
+                if (nuoviRicavi !== lastKnownRevenue || ricaviCheckCount === 1) {
+                    const valoreFormattato = `€ ${nuoviRicavi.toLocaleString('it-IT')}`;
+                    ricaviElement.textContent = valoreFormattato;
+                    
+                    if (nuoviRicavi !== lastKnownRevenue) {
+                        console.log(`🔄 Ricavi aggiornati: €${lastKnownRevenue.toLocaleString()} → €${nuoviRicavi.toLocaleString()}`);
+                        updateSyncStatus('connected', 'Sincronizzato con anagrafica clienti');
+                        
+                        // Effetto visivo per aggiornamento
+                        ricaviElement.style.color = '#2ecc71';
+                        ricaviElement.style.transform = 'scale(1.05)';
+                        setTimeout(() => {
+                            ricaviElement.style.color = '#2c3e50';
+                            ricaviElement.style.transform = 'scale(1)';
+                        }, 1000);
+                    }
+                    
+                    lastKnownRevenue = nuoviRicavi;
+                }
+
+                // 🎯 AGGIORNA STATUS SINCRONIZZAZIONE
+                if (fonteRicavi.includes('window.')) {
+                    updateSyncStatus('connected', `Collegato all'anagrafica clienti`);
+                } else {
+                    updateSyncStatus('disconnected', 'In attesa dati dall\'anagrafica');
+                }
+
+                return nuoviRicavi;
+                
+            } catch (error) {
+                console.error('❌ Errore nel recupero ricavi:', error);
+                updateSyncStatus('disconnected', 'Errore sincronizzazione');
+                return lastKnownRevenue;
+            }
+        }
+
+        // 🔄 FUNZIONE: AGGIORNA INDICATORE SINCRONIZZAZIONE
+        function updateSyncStatus(status, message) {
+            const indicator = document.getElementById('syncIndicator');
+            if (!indicator) return;
+            
+            syncStatus = status;
+            indicator.className = `sync-indicator ${status}`;
+            
+            if (status === 'connected') {
+                indicator.innerHTML = `✅ ${message}`;
+            } else {
+                indicator.innerHTML = `⏳ ${message}`;
+            }
+        }
+
+        // 🚀 MONITORAGGIO AUTOMATICO RICAVI
+        function startAdvancedRicaviMonitoring() {
+            console.log('🚀 Avvio monitoraggio avanzato ricavi dall\'anagrafica clienti...');
+            console.log('🎯 Modalità: Variabili JavaScript globali + PostMessage');
+            
+            // 1. PostMessage Listener per comunicazione diretta
+            window.addEventListener('message', function(event) {
+                try {
+                    if (event.data && event.data.type) {
+                        console.log(`📨 Messaggio ricevuto:`, event.data);
+                        
+                        // Gestione messaggi ricavi
+                        if (event.data.type.includes('RICAVI') || event.data.type.includes('REVENUE')) {
+                            const ricavi = parseFloat(
+                                event.data.ricavi || 
+                                event.data.ricaviTotali || 
+                                event.data.value || 
+                                event.data.ricavi_totali
+                            );
+                            
+                            if (!isNaN(ricavi) && ricavi > 0) {
+                                console.log('💰 Ricavi aggiornati via PostMessage:', ricavi);
+                                window.ricavi_totali = ricavi;
+                                setTimeout(fetchTotalRevenue, 100);
+                            }
+                        }
+                    }
+                } catch (error) {
+                    console.error('❌ Errore processing PostMessage:', error);
+                }
+            });
+            
+            // 2. Custom Event Listener
+            window.addEventListener('ricaviAggiornati', function(event) {
+                if (event.detail && event.detail.ricavi) {
+                    console.log('🎯 Custom event ricavi:', event.detail.ricavi);
+                    window.ricavi_totali = event.detail.ricavi;
+                    setTimeout(fetchTotalRevenue, 100);
+                }
+            });
+            
+            // 3. Polling intelligente
+            let quickChecks = 0;
+            const maxQuickChecks = 30; // 30 × 3 secondi = 1.5 minuti
+            
+            // Check rapidi ogni 3 secondi per 1.5 minuti
+            const quickInterval = setInterval(() => {
+                fetchTotalRevenue();
+                quickChecks++;
+                
+                if (quickChecks >= maxQuickChecks) {
+                    clearInterval(quickInterval);
+                    console.log('⏰ Quick check completato. Continuo con polling lento...');
+                    
+                    // Polling lento ogni 30 secondi
+                    setInterval(fetchTotalRevenue, 30000);
+                }
+            }, 3000);
+            
+            // 4. Check immediato
+            setTimeout(fetchTotalRevenue, 500);
+            
+            // 5. Check al focus della finestra
+            window.addEventListener('focus', () => {
+                console.log('👀 Finestra in focus, check ricavi...');
+                setTimeout(fetchTotalRevenue, 200);
+            });
+            
+            // 6. Informa l'anagrafica che siamo pronti
+            setTimeout(() => {
+                try {
+                    window.postMessage({
+                        type: 'PORTALE_READY',
+                        source: 'mns-group-portal',
+                        timestamp: new Date().toISOString()
+                    }, '*');
+                    console.log('📡 Segnale PORTALE_READY inviato');
+                } catch (e) {
+                    console.log('📡 PostMessage setup completato');
+                }
+            }, 1000);
+        }
+
         // Funzioni gestione utenti
         function selectUser(userId) {
             // Rimuovi selezione precedente
@@ -1057,149 +1263,12 @@
                 statCards[0].textContent = currentUser.stats.domandeAttive;
                 statCards[1].textContent = currentUser.stats.clientiGestiti;
                 statCards[2].textContent = currentUser.stats.scadenze;
-                // I ricavi totali vengono sempre dall'anagrafica clienti, non dall'utente
+                // I ricavi totali vengono sempre dall'anagrafica clienti
                 fetchTotalRevenue();
             }
 
             // Aggiorna attività recenti per utente
             updateRecentActivities();
-        }
-
-        // Funzione per recuperare i ricavi totali dall'anagrafica clienti
-        async function fetchTotalRevenue() {
-            try {
-                const ricaviElement = document.getElementById('totalValore');
-                
-                // 🎯 COLLEGAMENTO AUTOMATICO CON ANAGRAFICA CLIENTI
-                // Cerca il dato nei possibili modi che l'anagrafica può salvarlo
-                const possibiliChiavi = [
-                    'ricavi_totali',                    // Chiave principale
-                    'anagrafica_ricavi_totali',         // Alternativa specifica
-                    'mns_ricavi_totali',               // Chiave MNS
-                    'clienti_ricavi_totali',           // Variante clienti
-                    'total_ricavi',                    // Inglese/italiano
-                    'dashboard_ricavi',                // Per dashboard
-                    'anagrafica_clienti_ricavi'        // Nome completo app
-                ];
-                
-                let ricaviTrovati = null;
-                let valoreRicavi = 19300; // Valore iniziale dall'anagrafica
-                
-                // 1. Controlla localStorage per aggiornamenti
-                for (const chiave of possibiliChiavi) {
-                    const valore = localStorage.getItem(chiave);
-                    if (valore && valore !== 'null' && valore !== 'undefined') {
-                        console.log(`📊 Ricavi aggiornati dall'anagrafica: ${valore} (chiave: ${chiave})`);
-                        ricaviTrovati = parseFloat(valore);
-                        if (!isNaN(ricaviTrovati)) {
-                            valoreRicavi = ricaviTrovati;
-                            break;
-                        }
-                    }
-                }
-                
-                // 2. Se non trova aggiornamenti, mantiene il valore dall'anagrafica (€19.300)
-                if (!ricaviTrovati) {
-                    console.log('📊 Uso valore dall\'anagrafica clienti: €19.300');
-                }
-                
-                // 3. Aggiorna la visualizzazione
-                const valoreFormattato = `€ ${valoreRicavi.toLocaleString('it-IT')}`;
-                ricaviElement.textContent = valoreFormattato;
-                
-                // 4. Log per monitoraggio
-                console.log(`💰 Ricavi totali mostrati: ${valoreFormattato}`);
-                
-                return valoreRicavi;
-                
-            } catch (error) {
-                console.error('❌ Errore nel recupero ricavi:', error);
-                // In caso di errore, mantieni il valore dall'anagrafica
-                document.getElementById('totalValore').textContent = '€ 19.300';
-                return 19300;
-            }
-        }
-
-        // 🔄 MONITORAGGIO AUTOMATICO RICAVI
-        function startRicaviMonitoring() {
-            console.log('🚀 Avvio monitoraggio automatico ricavi dall\'anagrafica clienti...');
-            
-            // 1. Storage Event Listener (si attiva quando localStorage cambia)
-            window.addEventListener('storage', function(e) {
-                if (e.key && (e.key.includes('ricavi') || e.key.includes('revenue'))) {
-                    console.log('📡 Rilevato cambio ricavi via Storage Event:', e.key, '=', e.newValue);
-                    setTimeout(fetchTotalRevenue, 500); // Piccolo delay per sicurezza
-                }
-            });
-            
-            // 2. Polling periodico ogni 30 secondi per sicurezza
-            setInterval(() => {
-                fetchTotalRevenue();
-            }, 30000);
-            
-            // 3. Check più frequente ogni 5 secondi per i primi 2 minuti (per aggiornamenti rapidi)
-            let quickChecks = 0;
-            const quickInterval = setInterval(() => {
-                fetchTotalRevenue();
-                quickChecks++;
-                if (quickChecks >= 24) { // 24 * 5sec = 2 minuti
-                    clearInterval(quickInterval);
-                    console.log('⏰ Quick check completato, continuo con polling ogni 30 secondi');
-                }
-            }, 5000);
-            
-            // 4. Check immediato
-            fetchTotalRevenue();
-        }
-
-        // Funzione per sincronizzare i dati tra le applicazioni
-        function syncDataAcrossApps() {
-            console.log('🔗 Configurazione sincronizzazione cross-app...');
-            
-            // Listener per messaggi da altre applicazioni (PostMessage API)
-            window.addEventListener('message', function(event) {
-                // Sicurezza: verifica origine
-                if (event.origin !== 'https://gianlucamadeddu.github.io') {
-                    return;
-                }
-                
-                console.log('📨 Messaggio ricevuto da:', event.origin, event.data);
-                
-                // Gestione messaggi ricavi dall'anagrafica clienti
-                if (event.data.type === 'ANAGRAFICA_RICAVI_UPDATE') {
-                    const ricavi = parseFloat(event.data.ricavi || event.data.value || event.data.ricavi_totali);
-                    if (!isNaN(ricavi)) {
-                        console.log('💰 Ricavi aggiornati via PostMessage:', ricavi);
-                        localStorage.setItem('ricavi_totali', ricavi.toString());
-                        setTimeout(fetchTotalRevenue, 100);
-                    }
-                }
-                
-                // Supporto messaggi legacy
-                if (event.data.type === 'REVENUE_UPDATE') {
-                    const ricavi = parseFloat(event.data.value);
-                    if (!isNaN(ricavi)) {
-                        console.log('💰 Ricavi aggiornati via legacy message:', ricavi);
-                        localStorage.setItem('ricavi_totali', ricavi.toString());
-                        setTimeout(fetchTotalRevenue, 100);
-                    }
-                }
-            });
-            
-            // Messaggio di ready per l'anagrafica clienti
-            setTimeout(() => {
-                try {
-                    // Informa l'anagrafica che il portale è pronto a ricevere dati
-                    if (window.parent !== window) {
-                        window.parent.postMessage({
-                            type: 'PORTALE_READY',
-                            source: 'mns-group-portal'
-                        }, 'https://gianlucamadeddu.github.io');
-                    }
-                } catch (e) {
-                    console.log('📡 PostMessage setup completato (no parent window)');
-                }
-            }, 1000);
         }
 
         function updateRecentActivities() {
@@ -1396,36 +1465,42 @@
 
         function syncData() {
             if (!currentUser) return;
+            
             alert(`🔄 Sincronizzazione Dati - ${currentUser.name}:\n\n✅ CRM Marchi → Aggiornato\n✅ Sistema Perizie → Sincronizzato\n✅ Anagrafica Clienti → Allineata\n✅ Portale Formazione → Aggiornato\n✅ Gestione Bandi → Sincronizzato\n✅ Business Plan Generator → Aggiornato\n✅ Sistema Contabilità → Allineato\n\n📊 Dashboard aggiornata con ultimi dati`);
             
-            // Simula aggiornamento dati
+            // Force sync immediato
+            console.log('🔄 Sync forzata richiesta dall\'utente');
+            fetchTotalRevenue();
+            
             setTimeout(() => {
                 updateUserInterface();
                 alert('✨ Sincronizzazione completata!');
-            }, 2000);
+            }, 1000);
         }
 
-        // Inizializza la pagina
-        updateTime();
-        setInterval(updateTime, 60000);
-        
-        // 🚀 AVVIA MONITORAGGIO RICAVI AUTOMATICO
-        startRicaviMonitoring();
-        
-        // Inizializza sincronizzazione dati cross-app
-        syncDataAcrossApps();
-
-        // Simulazione dati real-time personalizzati per utente
-        setInterval(() => {
-            if (!currentUser) return;
+        // 🚀 INIZIALIZZAZIONE COMPLETA
+        function initializeApp() {
+            console.log('🚀 Inizializzazione MNS Group Portal...');
             
-            // Piccole variazioni casuali nei dati utente
-            const variation = Math.random() > 0.8 ? (Math.random() > 0.5 ? 1 : -1) : 0;
-            if (variation !== 0) {
-                currentUser.stats.domandeAttive = Math.max(1, currentUser.stats.domandeAttive + variation);
-                updateUserInterface();
-            }
-        }, 45000);
+            // Aggiorna orario
+            updateTime();
+            setInterval(updateTime, 60000);
+            
+            // 🎯 AVVIA MONITORAGGIO RICAVI AVANZATO
+            startAdvancedRicaviMonitoring();
+            
+            // Simulazione dati real-time personalizzati per utente
+            setInterval(() => {
+                if (!currentUser) return;
+                
+                // Piccole variazioni casuali nei dati utente
+                const variation = Math.random() > 0.8 ? (Math.random() > 0.5 ? 1 : -1) : 0;
+                if (variation !== 0) {
+                    currentUser.stats.domandeAttive = Math.max(1, currentUser.stats.domandeAttive + variation);
+                    updateUserInterface();
+                }
+            }, 45000);
+        }
 
         // Animazioni al caricamento
         window.addEventListener('load', () => {
@@ -1439,6 +1514,9 @@
                     card.style.transform = 'translateY(0)';
                 }, index * 100);
             });
+            
+            // Avvia l'app dopo le animazioni
+            setTimeout(initializeApp, 1000);
         });
     </script>
 </body>
